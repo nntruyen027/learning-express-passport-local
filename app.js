@@ -41,7 +41,12 @@ app.use(passport.session())
 
 app.use('/login', loginRouter);
 
-app.use('/', indexRouter);
+app.use('/', (req, res, next) => {
+  if (req.isAuthenticated())
+    next();
+  else
+    res.redirect('/login')
+}, indexRouter);
 
 app.use('/users', usersRouter);
 
