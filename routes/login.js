@@ -9,10 +9,10 @@ router.get('/', function (req, res, next) {
 
 //Xử lý form đăng nhập
 router.post('/', passport.authenticate('local-login', {
-    successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true
-}));
+}), (res, req, next) => {
+    req.redirect('/');
+});
 
 
 module.exports = router;

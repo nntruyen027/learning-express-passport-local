@@ -9,21 +9,15 @@ passport.use('local-login', new LocalStrategy(
         user.findOne({ username: username })
             .then(data => {
                 if (!data) {
-
-                    console.log('Khong co data');
                     return done(null, false);
                 }
 
                 if (!data.verifyPassword(password)) {
-                    console.log('mat khau sai')
                     return done(null, false);
                 }
-
-                console.log('Dung mat khau' + data.id)
                 return done(null, data)
             })
             .catch(err => {
-                console.log('Loi server')
                 return done(err);
             })
 
@@ -36,7 +30,6 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-
     user.findById(id)
         .then(user => {
             done(null, user)
