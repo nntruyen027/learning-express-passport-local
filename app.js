@@ -20,7 +20,10 @@ dbConect();
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 3600000
+  }
 }));
 
 
