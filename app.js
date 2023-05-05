@@ -39,17 +39,22 @@ app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/login', loginRouter);
-
-app.use('/', (req, res, next) => {
+function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
     next();
   else
     res.redirect('/login')
+}
+
+app.use('/login', loginRouter);
+
+app.use('/', (req, res, next) => {
+  isLoggedIn(req, res, next);
 }, indexRouter);
 
-app.use('/users', usersRouter);
-
+app.use('/users', (req, res, next) => {
+  isLoggedIn(req, res, next);
+}, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
